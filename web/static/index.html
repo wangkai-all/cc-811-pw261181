@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>县域比率分层估计与总量校准</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="viz-root">
+  <header class="page-header">
+    <h1>县域比率分层估计与总量校准</h1>
+    <p class="subtitle">虚构抽样数据 · 分层经验贝叶斯收缩 · 全市总量校准 · 整地区留出验证</p>
+  </header>
+
+  <!-- 筛选/操作行：所有控件统一位于图表上方一行 -->
+  <div class="controls" role="group" aria-label="场景与操作">
+    <label>总量场景
+      <select id="scenario"></select>
+    </label>
+    <button id="lock-all" type="button">锁定全部确认项</button>
+    <button id="unlock-all" type="button">全部解锁</button>
+    <span class="controls-sep"></span>
+    <a id="export-csv" href="#" download>导出明细 CSV</a>
+    <a id="export-json" href="#" download>导出 JSON</a>
+    <span class="controls-sep"></span>
+    <button id="theme-toggle" type="button" aria-label="切换明暗主题">◐ 主题</button>
+  </div>
+
+  <div id="banner" class="banner" role="status"></div>
+
+  <div class="tiles" id="tiles"></div>
+
+  <main class="layout" id="main">
+    <section class="card chart-card">
+      <h2>原始率 · 收缩率 · 校准后率</h2>
+      <p class="card-note">竖线为 90% 区间。点击县查看借用信息明细；无样本县无原始率。</p>
+      <div id="chart-rates" class="chart"></div>
+    </section>
+
+    <aside class="card detail-card" id="detail" aria-live="polite">
+      <h2>县区明细</h2>
+      <div id="detail-body"><p class="muted">点击图表或表格中的县查看详情。</p></div>
+    </aside>
+
+    <section class="card chart-card">
+      <h2>样本量与设计效应</h2>
+      <p class="card-note">柱高为抽样单元数；deff 为设计效应（权重不等导致有效样本量缩水）。</p>
+      <div id="chart-samples" class="chart"></div>
+    </section>
+
+    <section class="card">
+      <h2>整地区留出验证</h2>
+      <p class="card-note">每折整体留出一个地区重新训练，再预测留出县（对模拟真值）。加权 MAE 以有效样本量为权重。</p>
+      <div id="chart-coverage" class="chart"></div>
+      <div id="validation-table"></div>
+    </section>
+
+    <section class="card">
+      <h2>明细表</h2>
+      <p class="card-note">所有数值的可核查表格视图（与导出 CSV 一致）。确认项可在"锁定"列勾选后自动重算。</p>
+      <div id="data-table" class="table-wrap"></div>
+    </section>
+  </main>
+
+  <footer class="page-footer">
+    <span id="model-info"></span>
+    <span>纯标准库计算 · 同一计算路径支撑本页面与 CLI 导出</span>
+  </footer>
+</div>
+<div id="tooltip" class="tooltip" hidden></div>
+<script src="/static/app.js"></script>
+</body>
+</html>

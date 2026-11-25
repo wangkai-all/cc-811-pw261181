@@ -32,3 +32,7 @@ test-results/
 *.sqlite3-shm
 *.sqlite3-journal
 !*.traineddata.gz
+
+# 项目输出目录（CLI 导出）
+out/
+out_*/
